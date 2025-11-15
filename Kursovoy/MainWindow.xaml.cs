@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Kursovoy.Views;
 
 namespace Kursovoy
 {
@@ -67,7 +68,7 @@ namespace Kursovoy
         {
             ResetNavButtons();
             BtnGoals.Background = _selectedButtonColor;
-            ShowPlaceholder("Цели - отслеживание финансовых целей");
+            MainContentFrame.Content = new Views.GoalsPage();
         }
 
         private void BtnReports_Click(object sender, RoutedEventArgs e)
