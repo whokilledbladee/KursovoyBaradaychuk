@@ -54,7 +54,7 @@ namespace Kursovoy
         {
             ResetNavButtons();
             BtnCategories.Background = _selectedButtonColor;
-            ShowPlaceholder("Категории - настройка категорий доходов и расходов");
+            MainContentFrame.Content = new Views.CategoriesPage();
         }
 
         private void BtnBudgets_Click(object sender, RoutedEventArgs e)
