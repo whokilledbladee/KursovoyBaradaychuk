@@ -1,0 +1,102 @@
+﻿<Window x:Class="Kursovoy.Views.OperationDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Операция" 
+        Height="350" 
+        Width="400"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" 
+                  Grid.ColumnSpan="2" 
+                  Text="{Binding AccountInfo}" 
+                  FontWeight="SemiBold" 
+                  Margin="0,0,0,15" 
+                  TextAlignment="Center"
+                  TextWrapping="Wrap"/>
+
+        <TextBlock Grid.Row="1" 
+                  Grid.Column="0" 
+                  Text="Тип операции:" 
+                  Margin="0,0,10,10" 
+                  VerticalAlignment="Center"/>
+        <ComboBox Grid.Row="1" 
+                 Grid.Column="1" 
+                 x:Name="OperationTypeComboBox"
+                 Margin="0,0,0,10" 
+                 Height="25" 
+                 SelectionChanged="OperationType_SelectionChanged">
+            <ComboBoxItem Content="Доход" Tag="Income"/>
+            <ComboBoxItem Content="Расход" Tag="Expense"/>
+        </ComboBox>
+
+        <TextBlock Grid.Row="2" 
+                  Grid.Column="0" 
+                  Text="Сумма:" 
+                  Margin="0,0,10,10" 
+                  VerticalAlignment="Center"/>
+        <TextBox Grid.Row="2" 
+                Grid.Column="1" 
+                x:Name="AmountTextBox" 
+                Height="30" 
+                FontSize="14" 
+                Text="0"
+                Margin="0,0,0,10"/>
+
+        <TextBlock Grid.Row="3" 
+                  Grid.Column="0" 
+                  Text="Категория:" 
+                  Margin="0,0,10,10" 
+                  VerticalAlignment="Center"/>
+        <ComboBox Grid.Row="3" 
+                 Grid.Column="1" 
+                 x:Name="CategoryComboBox"
+                 Margin="0,0,0,10" 
+                 Height="25"/>
+
+        <TextBlock Grid.Row="4" 
+                  Grid.Column="0" 
+                  Text="Описание:" 
+                  Margin="0,0,10,10" 
+                  VerticalAlignment="Top"/>
+        <TextBox Grid.Row="4" 
+                Grid.Column="1" 
+                x:Name="DescriptionTextBox" 
+                Height="60" 
+                TextWrapping="Wrap" 
+                AcceptsReturn="True"
+                VerticalScrollBarVisibility="Auto"
+                Margin="0,0,0,15"/>
+
+        <StackPanel Grid.Row="6" 
+                   Grid.ColumnSpan="2" 
+                   Orientation="Horizontal" 
+                   HorizontalAlignment="Right">
+            <Button Content="ОК" 
+                   Click="OkButton_Click" 
+                   Width="80" 
+                   Margin="0,0,10,0" 
+                   Style="{StaticResource ActionButtonStyle}"/>
+            <Button Content="Отмена" 
+                   Click="CancelButton_Click" 
+                   Width="80" 
+                   Style="{StaticResource ActionButtonStyle}"/>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -80,7 +80,7 @@ namespace Kursovoy.Views
                 if (result == MessageBoxResult.Yes)
                 {
                     _goals.Remove(selectedGoal);
-                    GoalsListBox.Items.Refresh();
+                    GoalsListBox.Items.Refresh(); 
                 }
             }
             else

@@ -1,0 +1,314 @@
+﻿<UserControl x:Class="Kursovoy.Views.DashboardPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="1000">
+
+    <Grid Background="White" Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок и кнопки -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                <TextBlock Text="📊 Аналитика финансов" 
+                          FontSize="20" 
+                          FontWeight="Bold" 
+                          Foreground="#2C3E50"/>
+
+                <Button Content="📋 Сформировать отчет" 
+                       Click="GenerateReport_Click"
+                       Style="{StaticResource ActionButtonStyle}"
+                       Margin="30,0,0,0"
+                       Padding="20,10"
+                       FontSize="13"/>
+            </StackPanel>
+
+            <!-- Карточки статистики -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Общие доходы -->
+                <Border Grid.Column="0" 
+                       Background="#E8F6F3" 
+                       CornerRadius="8" 
+                       Padding="20" 
+                       Margin="0,0,8,0">
+                    <StackPanel>
+                        <TextBlock Text="Общие доходы" 
+                                  FontSize="13" 
+                                  FontWeight="SemiBold"
+                                  Foreground="#27AE60"/>
+                        <TextBlock x:Name="TotalIncomeText" 
+                                  Text="0 р." 
+                                  FontSize="24" 
+                                  FontWeight="Bold"
+                                  Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Общие расходы -->
+                <Border Grid.Column="1" 
+                       Background="#FDEDEC" 
+                       CornerRadius="8" 
+                       Padding="20" 
+                       Margin="8,0,8,0">
+                    <StackPanel>
+                        <TextBlock Text="Общие расходы" 
+                                  FontSize="13" 
+                                  FontWeight="SemiBold"
+                                  Foreground="#E74C3C"/>
+                        <TextBlock x:Name="TotalExpensesText" 
+                                  Text="0 р." 
+                                  FontSize="24" 
+                                  FontWeight="Bold"
+                                  Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Баланс -->
+                <Border Grid.Column="2" 
+                       Background="#EBF5FB" 
+                       CornerRadius="8" 
+                       Padding="20" 
+                       Margin="8,0,8,0">
+                    <StackPanel>
+                        <TextBlock Text="Баланс" 
+                                  FontSize="13" 
+                                  FontWeight="SemiBold"
+                                  Foreground="#3498DB"/>
+                        <TextBlock x:Name="BalanceText" 
+                                  Text="0 р." 
+                                  FontSize="24" 
+                                  FontWeight="Bold"
+                                  Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Всего транзакций -->
+                <Border Grid.Column="3" 
+                       Background="#F8F9FA" 
+                       CornerRadius="8" 
+                       Padding="20" 
+                       Margin="8,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="Всего транзакций" 
+                                  FontSize="13" 
+                                  FontWeight="SemiBold"
+                                  Foreground="#9B59B6"/>
+                        <TextBlock x:Name="TotalTransactionsText" 
+                                  Text="0" 
+                                  FontSize="24" 
+                                  FontWeight="Bold"
+                                  Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </StackPanel>
+
+        <!-- Основной контент с диаграммами -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+
+                <!-- Доходы по категориям -->
+                <Border BorderBrush="#BDC3C7" 
+                       BorderThickness="1" 
+                       CornerRadius="12" 
+                       Padding="25" 
+                       Margin="0,0,0,25"
+                       Background="#F9FDFC">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Заголовок доходов -->
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,20">
+                            <TextBlock Text="💰" 
+                                      FontSize="20"
+                                      Margin="0,0,10,0"/>
+                            <TextBlock Text="ДОХОДЫ ПО КАТЕГОРИЯМ" 
+                                      FontWeight="Bold" 
+                                      FontSize="16" 
+                                      Foreground="#27AE60"
+                                      VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <!-- Диаграмма доходов -->
+                        <ScrollViewer Grid.Row="1" 
+                                     HorizontalScrollBarVisibility="Auto" 
+                                     VerticalScrollBarVisibility="Disabled"
+                                     Margin="0,0,0,15"
+                                     Height="220">
+                            <ItemsControl x:Name="IncomeChart">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" 
+                                                   HorizontalAlignment="Left"
+                                                   MinWidth="800"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Height="200" 
+                                               Width="{Binding BarWidth}" 
+                                               Background="{Binding Color}"
+                                               Margin="3,0"
+                                               CornerRadius="4,4,0,0">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+
+                                                <!-- Столбец с суммой -->
+                                                <Border Grid.Row="0" 
+                                                       Background="{Binding Color}"
+                                                       CornerRadius="4,4,0,0"
+                                                       Margin="1,0,1,0">
+                                                    <TextBlock Text="{Binding DisplayAmount}" 
+                                                              Foreground="White" 
+                                                              FontWeight="Bold"
+                                                              VerticalAlignment="Bottom"
+                                                              HorizontalAlignment="Center"
+                                                              Margin="0,0,0,5"
+                                                              TextAlignment="Center"
+                                                              FontSize="12"
+                                                              TextWrapping="Wrap"
+                                                              MaxWidth="120"/>
+                                                </Border>
+
+                                                <!-- Подпись категории -->
+                                                <TextBlock Grid.Row="1" 
+                                                          Text="{Binding Category}" 
+                                                          FontSize="11" 
+                                                          Foreground="#2C3E50"
+                                                          HorizontalAlignment="Center"
+                                                          Margin="0,5,0,0"
+                                                          TextWrapping="Wrap"
+                                                          TextAlignment="Center"
+                                                          MaxWidth="120"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+
+                        <!-- Легенда доходов -->
+                        <WrapPanel Grid.Row="2" 
+                                  x:Name="IncomeLegend" 
+                                  HorizontalAlignment="Center"
+                                  Margin="0,20,0,0"/>
+                    </Grid>
+                </Border>
+
+                <!-- Расходы по категориям -->
+                <Border BorderBrush="#BDC3C7" 
+                       BorderThickness="1" 
+                       CornerRadius="12" 
+                       Padding="25"
+                       Background="#FFF9F9">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Заголовок расходов -->
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,20">
+                            <TextBlock Text="💸" 
+                                      FontSize="20"
+                                      Margin="0,0,10,0"/>
+                            <TextBlock Text="РАСХОДЫ ПО КАТЕГОРИЯМ" 
+                                      FontWeight="Bold" 
+                                      FontSize="16" 
+                                      Foreground="#E74C3C"
+                                      VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <!-- Диаграмма расходов -->
+                        <ScrollViewer Grid.Row="1" 
+                                     HorizontalScrollBarVisibility="Auto" 
+                                     VerticalScrollBarVisibility="Disabled"
+                                     Margin="0,0,0,15"
+                                     Height="220">
+                            <ItemsControl x:Name="ExpenseChart">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" 
+                                                   HorizontalAlignment="Left"
+                                                   MinWidth="800"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Height="200" 
+                                               Width="{Binding BarWidth}" 
+                                               Background="{Binding Color}"
+                                               Margin="3,0"
+                                               CornerRadius="4,4,0,0">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+
+                                                <!-- Столбец с суммой -->
+                                                <Border Grid.Row="0" 
+                                                       Background="{Binding Color}"
+                                                       CornerRadius="4,4,0,0"
+                                                       Margin="1,0,1,0">
+                                                    <TextBlock Text="{Binding DisplayAmount}" 
+                                                              Foreground="White" 
+                                                              FontWeight="Bold"
+                                                              VerticalAlignment="Bottom"
+                                                              HorizontalAlignment="Center"
+                                                              Margin="0,0,0,5"
+                                                              TextAlignment="Center"
+                                                              FontSize="12"
+                                                              TextWrapping="Wrap"
+                                                              MaxWidth="120"/>
+                                                </Border>
+
+                                                <!-- Подпись категории -->
+                                                <TextBlock Grid.Row="1" 
+                                                          Text="{Binding Category}" 
+                                                          FontSize="11" 
+                                                          Foreground="#2C3E50"
+                                                          HorizontalAlignment="Center"
+                                                          Margin="0,5,0,0"
+                                                          TextWrapping="Wrap"
+                                                          TextAlignment="Center"
+                                                          MaxWidth="120"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+
+                        <!-- Легенда расходов -->
+                        <WrapPanel Grid.Row="2" 
+                                  x:Name="ExpenseLegend" 
+                                  HorizontalAlignment="Center"
+                                  Margin="0,20,0,0"/>
+                    </Grid>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

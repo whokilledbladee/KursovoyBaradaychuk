@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="Финансовый менеджер" Height="600" Width="900"
         WindowStartupLocation="CenterScreen">
+
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -52,10 +54,6 @@
                             Click="BtnCategories_Click"
                             Style="{StaticResource NavButtonStyle}"/>
 
-                    <Button x:Name="BtnBudgets" 
-                            Content="Бюджеты" 
-                            Click="BtnBudgets_Click"
-                            Style="{StaticResource NavButtonStyle}"/>
 
                     <Button x:Name="BtnGoals" 
                             Content="Цели" 
@@ -69,10 +67,10 @@
 
                     <Rectangle Height="1" Margin="0,15" Fill="#5D6D7E"/>
 
-                    <Button x:Name="BtnSettings" 
-                            Content="Настройки" 
-                            Click="BtnSettings_Click"
-                            Style="{StaticResource NavButtonStyle}"/>
+                    <Button x:Name="BtnFeedback" 
+                        Content="Обратная связь" 
+                        Click="BtnFeedback_Click"
+                        Style="{StaticResource NavButtonStyle}"/>
 
                 </StackPanel>
             </Border>

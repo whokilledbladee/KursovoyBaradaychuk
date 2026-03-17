@@ -1,35 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Kursovoy.Views
 {
     public class Goal
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public decimal TargetAmount { get; set; }
         public decimal CurrentAmount { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        public decimal ProgressPercentage
-        {
-            get
-            {
-                if (TargetAmount > 0)
-                    return (CurrentAmount / TargetAmount) * 100;
-                return 0;
-            }
-        }
+        [NotMapped]
+        public decimal ProgressPercentage => TargetAmount > 0
+            ? (CurrentAmount / TargetAmount) * 100
+            : 0;
 
-        public double ProgressWidth
-        {
-            get
-            {
-                if (TargetAmount > 0)
-                    return (double)(CurrentAmount / TargetAmount) * 300;
-                return 0;
-            }
-        }
+        [NotMapped]
+        public double ProgressWidth => TargetAmount > 0
+            ? (double)(CurrentAmount / TargetAmount) * 300
+            : 0;
     }
 }

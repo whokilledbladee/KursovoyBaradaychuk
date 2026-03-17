@@ -1,24 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Kursovoy.Views;
 
 namespace Kursovoy
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private readonly SolidColorBrush _selectedButtonColor = new SolidColorBrush(Color.FromRgb(52, 152, 219));
@@ -29,25 +15,43 @@ namespace Kursovoy
             BtnDashboard_Click(null, null);
         }
 
+        // Добавьте этот публичный метод в MainWindow
+        public void RefreshDashboard()
+        {
+            // Если текущая страница - дашборд, обновляем его
+            if (MainContentFrame.Content is Views.DashboardPage dashboardPage)
+            {
+                dashboardPage.LoadData();
+                Console.WriteLine("Дашборд обновлен");
+            }
+        }
+
+        // Обновите метод BtnDashboard_Click, чтобы использовать RefreshDashboard
         private void BtnDashboard_Click(object sender, RoutedEventArgs e)
         {
             ResetNavButtons();
             BtnDashboard.Background = _selectedButtonColor;
-            ShowPlaceholder("Диаграммы - здесь будет обзор ваших финансов");
+
+            var dashboardPage = new Views.DashboardPage();
+            MainContentFrame.Content = dashboardPage;
         }
 
+        // Обновите метод BtnTransactions_Click
         private void BtnTransactions_Click(object sender, RoutedEventArgs e)
         {
             ResetNavButtons();
             BtnTransactions.Background = _selectedButtonColor;
-            ShowPlaceholder("Операции - управление доходами и расходами");
+
+            // Создаем новую страницу транзакций (она загрузит свежие данные из БД)
+            var transactionsPage = new Views.TransactionsPage();
+            MainContentFrame.Content = transactionsPage;
         }
 
         private void BtnAccounts_Click(object sender, RoutedEventArgs e)
         {
             ResetNavButtons();
             BtnAccounts.Background = _selectedButtonColor;
-            ShowPlaceholder("Счета - управление банковскими счетами и наличными");
+            MainContentFrame.Content = new Views.AccountsPage();
         }
 
         private void BtnCategories_Click(object sender, RoutedEventArgs e)
@@ -55,13 +59,6 @@ namespace Kursovoy
             ResetNavButtons();
             BtnCategories.Background = _selectedButtonColor;
             MainContentFrame.Content = new Views.CategoriesPage();
-        }
-
-        private void BtnBudgets_Click(object sender, RoutedEventArgs e)
-        {
-            ResetNavButtons();
-            BtnBudgets.Background = _selectedButtonColor;
-            ShowPlaceholder("Бюджеты - планирование и контроль лимитов");
         }
 
         private void BtnGoals_Click(object sender, RoutedEventArgs e)
@@ -75,42 +72,29 @@ namespace Kursovoy
         {
             ResetNavButtons();
             BtnReports.Background = _selectedButtonColor;
-            ShowPlaceholder("Отчеты - аналитика и визуализация данных");
+
+            MainContentFrame.Content = new Views.ReportsPage();
         }
 
-        private void BtnSettings_Click(object sender, RoutedEventArgs e)
+        // Измените метод BtnSettings на BtnFeedback
+        private void BtnFeedback_Click(object sender, RoutedEventArgs e)
         {
             ResetNavButtons();
-            BtnSettings.Background = _selectedButtonColor;
-            ShowPlaceholder("Настройки - конфигурация приложения");
+            BtnFeedback.Background = _selectedButtonColor;
+            MainContentFrame.Content = new Views.FeedbackPage();
         }
 
         private void ResetNavButtons()
         {
             var buttons = new[] {
                 BtnDashboard, BtnTransactions, BtnAccounts, BtnCategories,
-                BtnBudgets, BtnGoals, BtnReports, BtnSettings
+                BtnGoals, BtnReports, BtnFeedback
             };
 
             foreach (var button in buttons)
             {
                 button.Background = Brushes.Transparent;
             }
-        }
-
-        private void ShowPlaceholder(string content)
-        {
-            var textBlock = new TextBlock
-            {
-                Text = content,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center,
-                FontSize = 18,
-                Foreground = Brushes.Gray,
-                TextAlignment = TextAlignment.Center
-            };
-
-            MainContentFrame.Content = textBlock;
         }
     }
 }

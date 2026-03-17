@@ -27,7 +27,6 @@ namespace Kursovoy.Views
         }
         private void LoadCategories()
         {
-            //доходы, иконки это системыне эмоджи windows!!!
             var incomeCategories = new List<Category>
             {
                 new Category { Name = "Зарплата", Icon = "💼" },
@@ -40,7 +39,6 @@ namespace Kursovoy.Views
                 new Category { Name = "Прочие доходы", Icon = "📥" }
             };
 
-            //расходы
             var expenseCategories = new List<Category>
             {
                 new Category { Name = "Продукты", Icon = "🛒" },
